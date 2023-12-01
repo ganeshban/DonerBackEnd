@@ -2,6 +2,8 @@ package com.ganeshban.Service.Impl;
 
 
 import com.ganeshban.Core.NotFound;
+import com.ganeshban.DTO.ChangePasswordDTO;
+import com.ganeshban.DTO.LoginDTO;
 import com.ganeshban.Model.UserModel;
 import com.ganeshban.Repository.UserRepository;
 import com.ganeshban.Service.UserService;
@@ -38,4 +40,15 @@ public class UserServiceImpl implements UserService {
     public String delete(Long id) {
         return null;
     }
+
+    @Override
+    public String login(LoginDTO request) {
+        return null;
+    }
+
+    @Override
+    public String changePassword(ChangePasswordDTO request) {
+        return null;
+    }
+
 }

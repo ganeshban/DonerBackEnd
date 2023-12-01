@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>com.ganeshban</groupId>
-    <artifactId>Doner</artifactId>
+    <artifactId>Donor</artifactId>
     <version>1.0.0</version>
 
     <name>KPI</name>
