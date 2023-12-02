@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Service
 public interface UserService {
-    UserModel create(UserModel userModel);
+    UserModel create(UserModel userModel) throws NotFound;
 
     UserModel update(UserModel userModel) throws NotFound;
 

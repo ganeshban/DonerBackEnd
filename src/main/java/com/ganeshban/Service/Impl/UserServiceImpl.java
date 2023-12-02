@@ -8,6 +8,7 @@ import com.ganeshban.Model.UserModel;
 import com.ganeshban.Repository.UserRepository;
 import com.ganeshban.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +22,16 @@ public class UserServiceImpl implements UserService {
     private UserRepository repo;
 
     @Override
-    public UserModel create(UserModel userModel) {
+    public UserModel create(UserModel userModel) throws NotFound {
+        boolean user = repo.findByEmail(userModel.getEmail()).isPresent();
+        if (user){
+            throw new NotFound("this email is not available");
+        }
+        user=repo.findByPhone(userModel.getPhone()).isPresent();
+        if (user){
+            throw new NotFound("this phone is not available");
+        }
+
         return repo.save(userModel);
     }
 
@@ -37,6 +47,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserModel> getListOfUser(Map<String, Object> args) {
+        String q="select u.* from tblUserInformation u where u.address in (select a.id from tbl_address a where a.state ='"+args.get("state").toString()+"')";
+        System.out.println(args);
         return repo.findAll();
     }
 
@@ -64,4 +76,5 @@ public class UserServiceImpl implements UserService {
         repo.save(userModel);
         return "password change successfully";
     }
+
 }
