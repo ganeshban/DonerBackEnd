@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -33,10 +36,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserModel> getListOfUser() {
+    public List<UserModel> getListOfUser(Map<String, Object> args) {
         return repo.findAll();
     }
-
 
     @Override
     public String login(LoginDTO request) throws NotFound {
@@ -62,5 +64,4 @@ public class UserServiceImpl implements UserService {
         repo.save(userModel);
         return "password change successfully";
     }
-
 }

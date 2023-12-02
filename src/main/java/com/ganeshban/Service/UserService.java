@@ -7,6 +7,8 @@ import com.ganeshban.Model.UserModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Service
 public interface UserService {
@@ -16,7 +18,7 @@ public interface UserService {
 
     UserModel getOneUser(Long id) throws NotFound;
 
-    List<UserModel> getListOfUser();
+    List<UserModel> getListOfUser(Map<String, Object> args);
 
     String login(LoginDTO request) throws NotFound;
 

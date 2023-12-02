@@ -8,7 +8,10 @@ import com.ganeshban.Service.Impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/user")
@@ -23,9 +26,14 @@ public class UserController{
     }
 
     @GetMapping("/list")
-    public List<UserModel> getListUser (@RequestParam(value = "bg",defaultValue = "") Long bg)  {
-        System.out.println(bg);
-        return service.getListOfUser();
+    public List<UserModel> getListUser (@RequestParam(value = "bg",defaultValue = "") Long bloodGroup,
+                                        @RequestParam(value = "city",defaultValue = "") String state
+                                        )  {
+        System.out.println("-------");
+        Map<String, Object> data= new HashMap<>();
+        data.put("bloodGroup",bloodGroup);
+        data.put("state",state);
+        return service.getListOfUser(data);
     }
 
     @PostMapping("/create")
