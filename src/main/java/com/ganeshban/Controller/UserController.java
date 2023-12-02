@@ -5,11 +5,13 @@ import com.ganeshban.DTO.ChangePasswordDTO;
 import com.ganeshban.DTO.LoginDTO;
 import com.ganeshban.Model.UserModel;
 import com.ganeshban.Service.Impl.UserServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Valid
 @RestController
 @RequestMapping("/user")
 public class UserController{
@@ -29,11 +31,11 @@ public class UserController{
     }
 
     @PostMapping("/create")
-    public UserModel create (@RequestBody UserModel request){
+    public UserModel create (@RequestBody @Valid UserModel request) throws NotFound {
         return service.create(request);
     }
     @PutMapping("/update")
-    public UserModel update (@RequestBody UserModel request){
+    public UserModel update (@RequestBody @Valid UserModel request){
         return service.update(request);
     }
     @PostMapping("/login")
@@ -42,7 +44,7 @@ public class UserController{
     }
 
     @PostMapping("/change-password")
-    public String changePassword (@RequestBody ChangePasswordDTO request) throws NotFound {
+    public String changePassword (@RequestBody @Valid ChangePasswordDTO request) throws NotFound {
         return service.changePassword(request);
     }
 

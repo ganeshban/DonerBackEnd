@@ -18,7 +18,16 @@ public class UserServiceImpl implements UserService {
     private UserRepository repo;
 
     @Override
-    public UserModel create(UserModel userModel) {
+    public UserModel create(UserModel userModel) throws NotFound {
+        boolean user = repo.findByEmail(userModel.getEmail()).isPresent();
+        if (user){
+            throw new NotFound("this email is not available");
+        }
+        user=repo.findByPhone(userModel.getPhone()).isPresent();
+        if (user){
+            throw new NotFound("this phone is not available");
+        }
+
         return repo.save(userModel);
     }
 
