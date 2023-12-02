@@ -8,9 +8,10 @@ import com.ganeshban.Model.UserModel;
 import com.ganeshban.Repository.UserRepository;
 import com.ganeshban.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -28,27 +29,38 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserModel getOneUser(Long id) throws NotFound {
-        return repo.findById(id).orElseThrow(()-> new NotFound("User not found."));
+        return repo.findById(id).orElseThrow(() -> new NotFound("User not found."));
     }
 
     @Override
     public List<UserModel> getListOfUser() {
-        return null;
+        return repo.findAll();
+    }
+
+
+    @Override
+    public String login(LoginDTO request) throws NotFound {
+        String errorMsg="username and password are incorrect";
+        UserModel user= repo.findByEmail(request.getUserName()).orElseThrow(()->new NotFound(errorMsg));
+        if (!user.getPassword().equals(request.getPassword())){
+            throw new NotFound(errorMsg);
+        }
+
+        return "login success";
     }
 
     @Override
-    public String delete(Long id) {
-        return null;
-    }
-
-    @Override
-    public String login(LoginDTO request) {
-        return null;
-    }
-
-    @Override
-    public String changePassword(ChangePasswordDTO request) {
-        return null;
+    public String changePassword(ChangePasswordDTO request) throws NotFound {
+        if (!request.getConfirmPassword().equals(request.getNewPassword())) {
+            throw new NotFound("both passwords didn't match");
+        }
+        UserModel userModel = getOneUser(request.getId());
+        if (!request.getOldPassword().equals(userModel.getPassword())) {
+            throw new NotFound("old password is wrong");
+        }
+        userModel.setPassword(request.getNewPassword());
+        repo.save(userModel);
+        return "password change successfully";
     }
 
 }

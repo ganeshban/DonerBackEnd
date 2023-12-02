@@ -1,6 +1,7 @@
 package com.ganeshban.Controller;
 
 import com.ganeshban.Core.NotFound;
+import com.ganeshban.DTO.ChangePasswordDTO;
 import com.ganeshban.DTO.LoginDTO;
 import com.ganeshban.Model.UserModel;
 import com.ganeshban.Service.Impl.UserServiceImpl;
@@ -21,9 +22,9 @@ public class UserController{
         return service.getOneUser(id);
     }
 
-
     @GetMapping("/list")
-    public List<UserModel> getListUser (@PathVariable Long id)  {
+    public List<UserModel> getListUser (@RequestParam(value = "bg",defaultValue = "") Long bg)  {
+        System.out.println(bg);
         return service.getListOfUser();
     }
 
@@ -31,13 +32,18 @@ public class UserController{
     public UserModel create (@RequestBody UserModel request){
         return service.create(request);
     }
-    @PutMapping("/create")
+    @PutMapping("/update")
     public UserModel update (@RequestBody UserModel request){
         return service.update(request);
     }
     @PostMapping("/login")
-    public String login (@RequestBody LoginDTO request){
+    public String login (@RequestBody LoginDTO request) throws NotFound {
         return service.login(request);
+    }
+
+    @PostMapping("/change-password")
+    public String changePassword (@RequestBody ChangePasswordDTO request) throws NotFound {
+        return service.changePassword(request);
     }
 
 

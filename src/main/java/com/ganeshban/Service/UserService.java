@@ -10,14 +10,16 @@ import java.util.List;
 
 @Service
 public interface UserService {
+    UserModel create(UserModel userModel);
 
-    UserModel create (UserModel userModel);
-    UserModel update (UserModel userModel) throws NotFound;
-    UserModel getOneUser (Long id) throws NotFound;
-    List<UserModel> getListOfUser ();
-    String delete(Long id);
+    UserModel update(UserModel userModel) throws NotFound;
 
-    String login(LoginDTO request);
-    String changePassword(ChangePasswordDTO request);
+    UserModel getOneUser(Long id) throws NotFound;
+
+    List<UserModel> getListOfUser();
+
+    String login(LoginDTO request) throws NotFound;
+
+    String changePassword(ChangePasswordDTO request) throws NotFound;
 
 }
